@@ -218,3 +218,36 @@ def delete_student(request, id):
     student.delete()
     return redirect('student_list')
 
+# Send Test Email
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.core.mail import send_mail
+from .models import Student
+
+
+# 📌 SEND TEST EMAIL
+def send_test_email(request):
+
+    subject = 'Test Email'
+    message = 'This is a test email sent from Django.'
+    from_email = 'tridevx9@gmail.com'
+
+    # Replace with actual recipient email
+    recipient_list = ['geuvizegebre-9696@yopmail.com']
+
+    try:
+        send_mail(subject, message, from_email, recipient_list)
+
+        return render(
+            request,
+            'email_sent.html',
+            {'message': 'Test email sent successfully!'}
+        )
+
+    except Exception as e:
+
+        return render(
+            request,
+            'email_sent.html',
+            {'message': f'Error sending email: {str(e)}'}
+        )
